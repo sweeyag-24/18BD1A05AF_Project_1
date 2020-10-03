@@ -19,7 +19,7 @@ const url='mongodb://127.0.0.1:27017';
 const dbName='Hospital_Inventory';
 
 let db
-MongoClient.connect(url,//{useUnifiedTopology: true},
+MongoClient.connect(url,{useUnifiedTopology: true},
    (err,client)=>
 {
     if(err) return console.log(err);
@@ -101,14 +101,14 @@ app.delete('/deleteventilator',middleware.checkToken,function(req,res)
 app.post('/searchhospital',middleware.checkToken,function(req,res){
   var name=req.query.name;
   console.log(name);
-  var hospitaldetails=db.collection('hospital').find({'name':new RegExp(name, 'i')}).toArray().then(result => res.json(result));
+  var hospitaldetails=db.collection('hospital').find({"name":new RegExp(name, 'i')}).toArray().then(result => res.json(result));
 })
 
 
 
 
 //search ventilator by status
-app.post('searchventilatorbystatus',middleware.checkToken,function(req,res)
+app.post('/searchventilatorbystatus',middleware.checkToken,function(req,res)
 {
   var status=req.body.status;
   console.log(status);
@@ -118,7 +118,7 @@ app.post('searchventilatorbystatus',middleware.checkToken,function(req,res)
 });
 
 //search ventilators by hospital name
-app.post('searchventilatorbyname',middleware.checkToken,function(req,res)
+app.post('/searchventilatorbyname',middleware.checkToken,function(req,res)
 {
   var name=req.body.name;
   console.log(name);
@@ -146,7 +146,7 @@ app.put('/updatehospitaldetails', middleware.checkToken, function(req,res)
 //update ventilator
 app.put('/updateventilatordetails',middleware.checkToken,function(req,res)
 {
-  varventId={ ventilatorId: req.body.ventilatorId};
+  var ventId={ ventilatorId: req.body.ventilatorId};
   console.log(ventId);
   var newdata={ $set: { status: req.body.status}};
   db.collection("ventilators").updateOne(ventId,newdata,function(err,result)
@@ -160,4 +160,4 @@ app.put('/updateventilatordetails',middleware.checkToken,function(req,res)
 
 
 
-app.listen(3000);
+app.listen(3030);

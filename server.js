@@ -56,7 +56,7 @@ function main ()
 {
   let app = express(); // Export app for other routes to use
   let handlers = new HandlerGenerator();
-  const port = process.env.PORT || 8000;
+  const port = 100;
   app.use(bodyParser.urlencoded({ // Middleware
     extended: true
   }));
